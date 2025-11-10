@@ -10,16 +10,25 @@ def analyze_text(text):
     返回:
     list - 按字符频率降序排列的字符列表
     """
+    # 只保留字母和汉字，并将字母转换为小写
+    filtered_text = []
+    for char in text:
+        if char.isalpha() or '\u4e00' <= char <= '\u9fff':  # 只保留字母和汉字
+            if char.isalpha():
+                filtered_text.append(char.lower())
+            else:
+                filtered_text.append(char)
+    
     # 统计字符频率
     char_count = {}
-    for char in text:
+    for char in filtered_text:
         if char in char_count:
             char_count[char] += 1
         else:
             char_count[char] = 1
     
-    # 按频率降序排序
-    sorted_chars = sorted(char_count.items(), key=lambda x: x[1], reverse=True)
+    # 按频率降序排序，如果频率相同，按字符本身升序排列
+    sorted_chars = sorted(char_count.items(), key=lambda x: (-x[1], x[0]))
     
     # 返回字符列表
     return [char for char, count in sorted_chars]
