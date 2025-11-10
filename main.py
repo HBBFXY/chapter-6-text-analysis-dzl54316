@@ -10,13 +10,24 @@ def analyze_text(text):
     返回:
     list - 按字符频率降序排列的字符列表
     """
-    # 在此处增加代码
+    # 统计字符频率
+    char_count = {}
+    for char in text:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
     
+    # 按频率降序排序
+    sorted_chars = sorted(char_count.items(), key=lambda x: x[1], reverse=True)
+    
+    # 返回字符列表
+    return [char for char, count in sorted_chars]
 
 # 主程序，已完整
 if __name__ == "__main__":
     print("文本字符频率分析器")
-    print("====================")
+    print("==================")
     print("请输入一段文本（输入空行结束）：")
     
     # 读取多行输入
@@ -44,4 +55,4 @@ if __name__ == "__main__":
         print(", ".join(sorted_chars))
         
         # 提示用户比较不同语言
-        print("\n提示: 尝试输入中英文文章片段，比较不同语言之间字符频率的差别")
+        print("\n提示：尝试输入中英文文章片段，观察字符频率差异")
